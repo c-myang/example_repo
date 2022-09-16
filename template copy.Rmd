@@ -1,0 +1,87 @@
+---
+title: "Simple document"
+output:   
+  html_document: 
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r, message = FALSE}
+library(tidyverse) # Best practice to load all libraries at beginning of .Rmd
+```
+
+I'm an R Markdown document! 
+
+For HTML: 
+```{r, eval=FALSE}
+output:   
+  html_document: 
+    toc: true
+    toc_float: true
+    code_folding: hide
+```
+
+For PDF: 
+```{r, eval=FALSE}
+output: pdf_document
+```
+
+# Section 1
+
+Here's a **code chunk** that samples from 
+a _normal distribution_:
+
+```{r}
+samp = rnorm(100)
+length(samp)
+```
+
+# Section 2
+
+I can take the mean of the sample, too!
+The mean is `r mean(samp)`.
+To round the output, we can use `round(mean(samp), 2)`.
+
+# Section 3
+
+This is going to make a plot! 
+Use option + Cmd + I to make a new chunk. 
+
+First I generate a dataframe, then use `ggplot` to make a scatterplot.
+
+```{r chunk_scatterplot}
+plot_df = 
+  tibble(
+    x = rnorm(n = 1000), #Standard normal distribution
+    y = 1 + 2 * x^2 + rnorm(n = 1000)
+  )
+
+ggplot(plot_df, aes(x = x, y = y)) + geom_point()
+
+```
+```{r chunk_histogram, echo = FALSE}
+ggplot(plot_df, aes(x = x)) + geom_histogram()
+```
+
+## Learning assessment
+
+Write a named code chunk that creates a dataframe comprised of: a numeric variable containing a random sample of size 500 from a normal variable with mean 1; a logical vector indicating whether each sampled value is greater than zero; and a numeric vector containing the absolute value of each element. 
+
+Then, produce a histogram of the absolute value variable just created. Add an inline summary giving the median value rounded to two decimal places. 
+
+What happens if you set eval = FALSE to the code chunk? What about echo = FALSE?
+
+```{r}
+df = tibble(
+  var_numeric = rnorm(500, mean = 1),
+  var_logic = var_numeric > 0, 
+  var_abs = abs(var_numeric)
+)
+
+ggplot(df, aes(x = var_abs)) + geom_histogram()
+```
+
+The median of the variable containing absolute values is 
+`r round(median(df$var_abs), 2)`.
+
