@@ -1,2 +1,2 @@
 # example_repo
-BIST P8105 Example Repo
+This is an Example Repo for BIST P8105 Data Science I.
